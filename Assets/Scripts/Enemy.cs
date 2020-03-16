@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         StartTime = 0f;
+        gameObject.GetComponentInParent<Animator>().enabled = false;
     }
 
     public void ResetTimer()
@@ -55,6 +56,7 @@ public class Enemy : MonoBehaviour
         var distance = (float)Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
         if(distance <= AttackRange)
         {
+            gameObject.GetComponentInParent<Animator>().enabled = true;
             transform.LookAt(GameObject.FindGameObjectWithTag("ShooterCollider").transform.position);
             if (StartTime >= maxTime)
             {
@@ -62,7 +64,7 @@ public class Enemy : MonoBehaviour
 
                 // attack function
                 GameObject Shooter = Instantiate(spell, transform.position - BlasterOffset, transform.rotation);
-                Shooter.transform.position = Vector3.MoveTowards(Shooter.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position, step);
+
                 
             }
         }

@@ -31,7 +31,14 @@ public class DamageOverlayScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        alpha = 1 - (PlayerHealthScript.Currenthealth / PlayerHealthScript.maxHealth);
+        if (PlayerHealthScript.IsDead)
+        {
+            alpha = 1;
+        }
+        else
+        {
+            alpha = 1 - (PlayerHealthScript.Currenthealth / PlayerHealthScript.maxHealth);
+        }
         Color currentColor = new Color(red, green, blue, alpha);
 
         gameObject.GetComponent<Image>().color = currentColor;

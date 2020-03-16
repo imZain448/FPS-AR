@@ -9,7 +9,7 @@ public class TileManager : MonoBehaviour
     private Transform PlayerTransform;
     private float PositionZ;
     private float tileLenght;
-    private int NumberOfTiles = 15;
+    private int NumberOfTiles = 10;
     private float thresholdRegion = 60f;
 
     private int PrefabIndex;
@@ -23,12 +23,9 @@ public class TileManager : MonoBehaviour
         tileLenght = TilePrefabs[0].GetComponentInChildren<Renderer>().bounds.size.z;
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         activeTiles = new List<GameObject>();
-        PositionZ = 0.0f;
-        for (int i = 0; i <= 3; i++)
-        {
-            SpawnTile(0);
-        }
-        for (int i = 0; i <= 12; i++)
+        PositionZ = tileLenght;
+        SpawnTile(0);
+        for (int i = 0; i <= 9; i++)
         {
             SpawnTile(RandomIndex());
         }

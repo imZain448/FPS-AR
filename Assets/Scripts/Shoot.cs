@@ -6,9 +6,12 @@ public class Shoot : MonoBehaviour
 {
     public ParticleSystem muzzleFlash;
     public GameObject ImpactEffect;
-
+    CharacterControllerScript ccScript;
     public float Damage = 10f;
     public float range = 100f;
+
+    public float recoilUp = 2f;
+    public float recoilDown = 2f;
 
     public float enemiesKilled;
 
@@ -22,20 +25,20 @@ public class Shoot : MonoBehaviour
     private void Start()
     {
         enemiesKilled = 0f;
+        ccScript = FindObjectOfType<CharacterControllerScript>();
     }
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
-        {
-            shoot();
-        }
+        
     }
 
-    private void shoot()
+    public void shoot()
     {
         muzzleFlash.Play();
+        _addRecoil();
         PlayShoot.GetComponent<AudioSource>().PlayOneShot(MuzzleSound);
+
         RaycastHit hit;
         if (Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out hit, range))
         {
@@ -47,7 +50,6 @@ public class Shoot : MonoBehaviour
                 {
                     GameObject Explosion = Instantiate(ExplosionEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     enemiesKilled += 1;
-
                     Destroy(Explosion, 2f);
                 }
             }
@@ -55,12 +57,14 @@ public class Shoot : MonoBehaviour
             {
                 Destroy(hit.transform.gameObject);
             }
-
             GameObject impact = Instantiate(ImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impact, 2f);
-
-
         }
+    }
 
+    private void _addRecoil()
+    {
+        ccScript.upRecoil += recoilUp;
+        ccScript.sideRecoil += recoilDown;
     }
 }

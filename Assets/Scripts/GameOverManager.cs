@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameOverManager : MonoBehaviour
 {
     public Image GameOver;
+    public Text GameOverText;
     public GameObject Health;
     public Image CrossHair;
     public GameObject DisplayScore;
@@ -16,6 +17,7 @@ public class GameOverManager : MonoBehaviour
     Enemy enemyScript;
     CharacterControllerScript ccScript;
     Shoot shootScript;
+    GameObject[] enemyBlasterScript;
 
     // Start is called before the first frame update
     void Start()
@@ -27,12 +29,14 @@ public class GameOverManager : MonoBehaviour
         shootScript = FindObjectOfType<Shoot>();
         GameOver.enabled = false;
         DisplayScore.gameObject.SetActive(false);
+        GameOverText.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(PlayerHealthScript.IsDead)
+        enemyBlasterScript = GameObject.FindGameObjectsWithTag("enemyShooter");
+        if (PlayerHealthScript.IsDead)
         {
             GameOver.enabled = true;
             DisplayScore.SetActive(true);
@@ -43,6 +47,14 @@ public class GameOverManager : MonoBehaviour
             enemyScript.enabled = false;
             ccScript.enabled = false;
             shootScript.enabled = false;
+            GameOverText.enabled = true;
+            if(enemyBlasterScript.Length != 0)
+            {
+                foreach(GameObject shooter in enemyBlasterScript)
+                {
+                    Destroy(shooter);
+                }
+            }
         }
     }
 }

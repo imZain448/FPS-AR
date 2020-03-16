@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa08ce985b82d54e9bf21b6d30ace44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 20
   AttackRange: 50
   spell: {fileID: 1947871717301538, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
   BlasterOffset: {x: 0, y: -0.2, z: 0.3}
